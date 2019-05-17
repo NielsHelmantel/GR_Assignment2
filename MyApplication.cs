@@ -1,8 +1,8 @@
 namespace Template
 {
 
-	class MyApplication
-	{
+    class MyApplication
+    {
         // member variables
         public Surface screen;
         public Sprite sprite;
@@ -19,23 +19,23 @@ namespace Template
             lights[0] = new Light
             {
                 pX = 300,
-                pY = 100 * screen.width, //x + y * width, dan is de locatie van het licht (x,y)
+                pY = 100, //x + y * width is de locatie van het licht (x,y) in de pixelarray
                 color = MixColor(1, 1, 1)
             };
             lights[1] = new Light
             {
                 pX = 200,
-                pY =  50 * screen.width,
+                pY = 50,
                 color = MixColor(1, 1, 0)
             };
 
-        
-            
+
+
 
             // hieronder een lege primitive om de code werkend te maken.
             primitives[0] = new Primitives
             {
-                
+
             };
 
             //hieronder de basiscode uit de opdracht, vertaald naar c# code
@@ -43,13 +43,13 @@ namespace Template
             {
                 pixelColor = MixColor(0, 0, 0);
 
-                
+
 
                 for (int y = 0; y < lights.Length; y++)
                 {
-                    ray.O = ray.pixelPositions(lights[0].pX, lights[0].pY);
-                    ray.D = ray.normalizeDirectionToLight(ray.O);
-                    ray.t = ray.distanceToLight();
+                    ray.O = ray.pixelPositions(x, screen.width);
+                    ray.t = ray.distanceToLight(lights[y].pX, lights[y].pY);
+                    ray.D = ray.normalizeDirectionToLight(lights[y].pX, lights[y].pY);
                     occluced = false;
                     for (int p = 0; p < primitives.Length; p++)
                     {
@@ -63,24 +63,24 @@ namespace Template
                         pixelColor += lights[y].color * ray.lightAttenuation(ray.t);
                     }
                 }
-                
-                   
-                
+
+
+
                 //gaat dit hieronder qua afronding goed?
                 screen.pixels[x] = (int)pixelColor;
             }
 
-           
+
 
         }
         // tick: renders one frame
         public void Tick()
         {
             // screen.Clear( 0 );
-            screen.Print("hello world", 2, 2, 0xffffff);
-            screen.Line(2, 20, 160, 20, 0xff0000);
+            //screen.Print("hello world", 2, 2, 0xffffff);
+            //screen.Line(2, 20, 160, 20, 0xff0000);
 
-            screen.Bar(50, 50, 100, 100, 155);
+            //screen.Bar(50, 50, 100, 100, 155);
 
         }
 
@@ -88,6 +88,7 @@ namespace Template
         {
             return (red << 16) + (green << 8) + blue;
         }
+
 
     }
 }
