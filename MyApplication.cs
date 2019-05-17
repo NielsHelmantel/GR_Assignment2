@@ -29,13 +29,15 @@ namespace Template
                 color = MixColor(1, 1, 0)
             };
 
-        
-            
+
+
 
             // hieronder een lege primitive om de code werkend te maken.
             primitives[0] = new Primitives
             {
-                
+                centerX = 5,
+                centerY = 30,
+                straal = 20
             };
 
             //hieronder de basiscode uit de opdracht, vertaald naar c# code
@@ -49,7 +51,7 @@ namespace Template
                 {
                     ray.O = ray.pixelPositions(lights[0].pX, lights[0].pY);
                     ray.D = ray.normalizeDirectionToLight(ray.O);
-                    ray.t = ray.distanceToLight();
+                    //ray.t = ray.distanceToLight();
                     occluced = false;
                     for (int p = 0; p < primitives.Length; p++)
                     {
