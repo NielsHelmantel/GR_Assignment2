@@ -29,22 +29,13 @@ namespace Template
                 color = MixColor(1, 1, 0)
             };
 
-<<<<<<< HEAD
+
             // hieronder een lege primitive om de code werkend te maken.
             primitives[0] = new Primitives
             {
                 centerX = 5,
                 centerY = 30,
                 straal = 20
-=======
-
-
-
-            // hieronder een lege primitive om de code werkend te maken.
-            primitives[0] = new Primitives
-            {
-
->>>>>>> 8dac4fd911b158f698f70d9524141c0d49a9c797
             };
 
             //hieronder de basiscode uit de opdracht, vertaald naar c# code
