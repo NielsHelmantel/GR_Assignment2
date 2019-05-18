@@ -6,6 +6,7 @@ using System.Numerics; //nodig voor vector
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vector2 = System.Numerics.Vector2;
 
 namespace Template
 {
@@ -52,18 +53,57 @@ namespace Template
 
         public bool intersects(Primitives primitive)
         {
+            if (primitive.PrimitivesType == PrimitivesType.Circle)
+            {
+                // Richtingsvector van het middelpunt cirkel naar huidige pixel.
+                Point pos = new Point(primitive.centerX, primitive.centerY);
 
+                float cX = pos.X - O.X;
+                float cY = pos.Y - O.Y;
+
+                Vector2 c = new Vector2(cY, cX);
+
+                // Het component van vector c op de richtingsvector naar het lichtpunt. 
+                // variabele t uit de sheets L5;43 hernoemd naar m, omdat t al wordt gebruikt als ray.t
+                float m = Vector2.Dot(c, D);
+                
+                Vector2 q = c - m * D;
+
+                // De lengte van vector Q.
+                float p2 = Vector2.Dot(q, q);
+
+                // In dit geval zijn er geen snijpunten:
+                double radius2 = Math.Pow(primitive.radius, 2);
+                if (p2 > radius2) {
+                    return false;          
+                }
+
+                // Het punt wanneer de ray de cirkel raakt. 
+                m -= (float)Math.Sqrt(radius2 - p2);
+
+                // Als
+                if ((m < t) && (m > 0))
+                {
+                    t = m;
+                    return true;
+                } 
+                
+            }
+
+            // Als er geen primitives bestaan dan is er ook geen intersectie.
+            return false;
 
             //hier berekenen of de ray de gegeven primitive snijdt
             //ik return nu true om foutmeldingen te voorkomen, dit moet nog veranderd
-            return true;
+           
         }
 
         public float lightAttenuation(float distance)
         {
             //ik return nu 0.5, maar dat moet nog aangepast
             //we willen hier de afzwakking van het licht aan de hand van de afstand van de pixel naar het licht
-            return 0.5f;
+            float attenuationFactor = 1 / (distance * distance);
+            return attenuationFactor;
         }
 
     }

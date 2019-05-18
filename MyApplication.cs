@@ -5,9 +5,8 @@ namespace Template
     {
         // member variables
         public Surface screen;
-        public Sprite sprite;
         public Ray ray = new Ray();
-        public Light[] lights = new Light[2];
+        public Light[] lights = new Light[3];
         bool occluced;
         public Primitives[] primitives = new Primitives[1];
         public float pixelColor; //de pixelkleur in float ipv integer voor de berekeningen
@@ -28,22 +27,26 @@ namespace Template
                 pY = 50,
                 color = MixColor(1, 1, 0)
             };
-
+            lights[2] = new Light
+            {
+                pX = 100,
+                pY = 26,
+                color = MixColor(1, 1, 0)
+            };
 
             // hieronder een lege primitive om de code werkend te maken.
             primitives[0] = new Primitives
             {
                 centerX = 5,
                 centerY = 30,
-                straal = 20
+                radius = 100,
+                PrimitivesType = PrimitivesType.Circle
             };
 
             //hieronder de basiscode uit de opdracht, vertaald naar c# code
             for (int x = 0; x < screen.pixels.Length; x++)
             {
                 pixelColor = MixColor(0, 0, 0);
-
-
 
                 for (int y = 0; y < lights.Length; y++)
                 {
